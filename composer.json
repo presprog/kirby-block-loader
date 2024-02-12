@@ -3,7 +3,9 @@
   "description": "Have block blueprints and snippets in one place",
   "type": "kirby-plugin",
   "require": {
-    "php": "^8.1",
+    "php": "^8.1"
+  },
+  "require-dev": {
     "getkirby/composer-installer": "^1.2"
   },
   "license": "MIT",
