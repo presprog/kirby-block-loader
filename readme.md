@@ -63,8 +63,11 @@ MIT
 
 ## Alternatives
 
-There is [microman/components](https://getkirby.com/plugins/microman/components) which also tries to solve this problem, but introduces the new concept of components. This is a more versatile approach, as components can be anything. Our plugin only works for blocks. 
+[microman/components](https://getkirby.com/plugins/microman/components) also tries solve this problem, but introduces the new concept of components. This is a more versatile approach, as components can be anything. Our plugin only works for blocks. 
 
 ----
 
 Made with ♥️ and ☕ by Present Progressive
+
+
+
