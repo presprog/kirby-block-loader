@@ -1,0 +1,22 @@
+{
+  "name": "presprog/kirby-block-loader",
+  "description": "Have block blueprints and snippets in one place",
+  "type": "kirby-plugin",
+  "require": {
+    "php": "^8.1",
+    "getkirby/composer-installer": "^1.2"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Benedict Massolle",
+      "email": "bm@presentprogressive.de",
+      "homepage": "https://www.presentprogressive.de"
+    }
+  ],
+  "config": {
+    "allow-plugins": {
+      "getkirby/composer-installer": true
+    }
+  }
+}
