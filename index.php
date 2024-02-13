@@ -8,15 +8,19 @@ App::plugin('presprog/block-loader', [
             $base  = kirby()->root('blocks') ?? kirby()->root('site') . DIRECTORY_SEPARATOR . 'blocks';
             $types = \Kirby\Filesystem\Dir::read($base);
 
-            $blueprints = [];
-            $snippets   = [];
+            $classes    = [];
+            $extensions = [
+                'blockModels' => [],
+                'blueprints' => [],
+                'snippets' => [],
+            ];
 
             foreach ($types as $type) {
                 $typePath = $base . DIRECTORY_SEPARATOR . $type;
                 $iterator = new DirectoryIterator($typePath);
 
                 // Register blueprint, namespaced with `blocks`
-                $blueprints['blocks/' . $type] = $typePath . DIRECTORY_SEPARATOR . $type . '.yml';
+                $extensions['blueprints']['blocks/' . $type] = $typePath . DIRECTORY_SEPARATOR . $type . '.yml';
 
                 /** @var DirectoryIterator $file */
                 foreach ($iterator as $file) {
@@ -24,15 +28,22 @@ App::plugin('presprog/block-loader', [
                         continue;
                     }
 
+                    if ($file->getBasename() === 'model.php') {
+                        $class = Str::studly($type . 'Block');
+
+                        // Register custom block model
+                        $extensions['blockModels'][$type] = $class;
+                        // Add path to class to load it later
+                        $classes[$class]                  = $file->getPathname();
+                    }
+
                     // Register all PHP files, namespaced with `blocks`
-                    $snippets['blocks/' . $file->getBasename('.php')] = $typePath . DIRECTORY_SEPARATOR . $file->getFilename();
+                    $extensions['snippets']['blocks/' . $file->getBasename('.php')] = $typePath . DIRECTORY_SEPARATOR . $file->getFilename();
                 }
             }
 
-            kirby()->extend([
-                'blueprints' => $blueprints,
-                'snippets' => $snippets,
-            ], kirby()->plugin('presprog/block-loader'));
+            kirby()->extend($extensions, kirby()->plugin('presprog/block-loader'));
+            load($classes);
         },
     ],
 ]);
